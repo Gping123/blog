@@ -14,6 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+$api = app('Dingo\Api\Routing\Router');
+
+
+# 需要授权接口
+$api->version('v1', [
+    'middleware' => 'api.auth',
+    'namespace' => 'App\\Http\\Controllers',
+], function ($api) {
+
+    $api->get('/user', function () {
+        return response()->json();
+    });
+
 });
